@@ -1,6 +1,6 @@
 {
   "name": "@mif/runtime",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./bundles/mif-runtime.umd.js",
   "module": "./fesm5/mif-runtime.js",
   "repository": "https://github.com/trotyl/mif-runtime.git",

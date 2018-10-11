@@ -7,18 +7,21 @@ function instantiate(this: typeof System, url: string, firstParentUrl: string) {
     return exisingInstantiate.call(this, url, firstParentUrl)
   }
 
-  const [_, name, criteria, path] = url.split(':') as [void, string, string, string?]
+  const [_, name, criteria, path] = url.split(':') as [void, string, string, string]
   
   let load: Load | null = null
   if ((load = retrivePackage(name, criteria)) != null) {
     return load
   }
 
-  if (path == null) {
-    throw new Error(`Cannot instantiate module '${name}' of version '${criteria}' due to no matched version nor fallback path.`)
+  let requestUrl: Promise<string>
+  if (path === '*') {
+    // TODO: make it configurable
+    requestUrl = this.resolve(`https://trotyl.github.io/${name}/${name.replace('mif-', '')}.mif.js`, firstParentUrl)
+  } else {
+    requestUrl = this.resolve(path, firstParentUrl)
   }
 
-  const requestUrl = this.resolve(path, firstParentUrl)
   return exisingInstantiate.call(this, requestUrl)
 }
 

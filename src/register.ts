@@ -10,7 +10,7 @@ function register(this: typeof System, ...args: any[]): void {
     const [_, deps, declare] = args as [void, string[], Function]
     const syntehticDeps = deps.map(dep => {
       const depInfo = pkgInfo.dependencies[dep]
-      return `mif:${dep}:${depInfo.version}:${depInfo.path}`
+      return `mif:${dep}:${depInfo.version}:${depInfo.path || ''}`
     })
     registerPackage(pkgInfo.name, pkgInfo.version, [syntehticDeps, declare])
     return existingRegister.call(this, syntehticDeps, declare)
